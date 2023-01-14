@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: pleasedeposit
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    hibernate:
+        ddl-auto: none
+    generate-ddl: false
+    show-sql: true
