@@ -4,11 +4,9 @@ import lombok.Data;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.infra.user.entity.User;
 
-import javax.persistence.Column;
-import java.time.LocalDateTime;
-
 @Data
 public class UserDto {
+    private Long userSeq;
     private String userId;
     private String nickname;
     private String accessToken;
@@ -17,6 +15,7 @@ public class UserDto {
 
     public static UserDto from(User user) {
         UserDto dto = new UserDto();
+        dto.setUserSeq(user.getUserSeq());
         dto.setUserId(user.getUserId());
         dto.setNickname(user.getNickname());
         dto.setAccessToken(user.getAccessToken());
