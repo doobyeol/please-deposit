@@ -3,6 +3,7 @@ package tk.returntrue.deposit.infra.user.entity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import tk.returntrue.deposit.domain.common.entity.BaseEntity;
+import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
 
@@ -58,6 +59,19 @@ public class User extends BaseEntity {
 
         user.setCreatedBy(userDto.getUserId());
         user.setUpdatedBy(userDto.getUserId());
+
+        return user;
+    }
+
+    public static User from(AuthDto authDto, LoginType loginType) {
+        User user = User.builder()
+                .userId(authDto.getId())
+                .nickname(authDto.getNickname())
+                .loginType(loginType)
+                .build();
+
+        user.setCreatedBy(authDto.getId());
+        user.setUpdatedBy(authDto.getId());
 
         return user;
     }
