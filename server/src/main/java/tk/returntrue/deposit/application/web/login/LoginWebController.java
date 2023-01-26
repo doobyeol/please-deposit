@@ -12,6 +12,7 @@ import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
 @Slf4j
@@ -26,7 +27,7 @@ public class LoginWebController {
     }
 
     @GetMapping("/login/kakao/callback")
-    public void kakaoLoginCallback(HttpServletResponse response, @RequestParam String code) {
+    public void kakaoLoginCallback(HttpServletResponse response, @RequestParam String code) throws IOException {
         log.info("kakaoLoginCallback");
         log.info("code : {}", code);
 
@@ -40,6 +41,7 @@ public class LoginWebController {
         log.info("kakaoLoginCallback - userDto : {}", userDto);
         // actoken , retoken 발급 (UserDto) -> ac만 쿠키셋팅
         // redirect
+        response.sendRedirect("http://127.0.0.1:5173/main");
     }
 
 

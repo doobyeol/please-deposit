@@ -50,6 +50,11 @@ public class User extends BaseEntity {
         this.nickname = nickname;
     }
 
+    public void updateToken(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+
     public static User from(UserDto userDto) {
         User user = User.builder()
                 .userId(userDto.getUserId())
@@ -68,6 +73,21 @@ public class User extends BaseEntity {
                 .userId(authDto.getId())
                 .nickname(authDto.getNickname())
                 .loginType(loginType)
+                .build();
+
+        user.setCreatedBy(authDto.getId());
+        user.setUpdatedBy(authDto.getId());
+
+        return user;
+    }
+
+    public static User from(AuthDto authDto, LoginType loginType, String accessToken, String refreshToken) {
+        User user = User.builder()
+                .userId(authDto.getId())
+                .nickname(authDto.getNickname())
+                .loginType(loginType)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
 
         user.setCreatedBy(authDto.getId());
