@@ -51,6 +51,9 @@ public class User extends BaseEntity {
     }
 
     public void updateToken(String accessToken, String refreshToken) {
+        LocalDateTime now = LocalDateTime.now();
+        this.accessTokenExpireAt = now.plusDays(1);
+        this.refreshTokenExpireAt = now.plusDays(7);
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }

@@ -9,3 +9,19 @@ spring:
         ddl-auto: none
     generate-ddl: false
     show-sql: true
+
+oauth:
+  login-redirect-uri: http://localhost:5173/main
+  kakao:
+    redirect-uri: http://localhost:8080/login/kakao/callback
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+oauth:
+  login-redirect-uri: /main
+  kakao:
+    redirect-uri: https://pleasedeposit.tk/login/kakao/callback

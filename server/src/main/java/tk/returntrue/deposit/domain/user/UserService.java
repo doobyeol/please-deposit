@@ -3,6 +3,7 @@ package tk.returntrue.deposit.domain.user;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
@@ -12,6 +13,7 @@ import tk.returntrue.deposit.infra.user.repository.UserRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,28 +41,17 @@ public class UserService {
         return UserDto.from(savedUser);
     }
 
+    @Transactional
     public UserDto createUserWithOAuth(AuthDto authDto, LoginType loginType) {
-        // TODO : 중복체크 - 완료
-        User userEntity = userRepository.findByUserId(authDto.getId());
-        log.info("userEntity : {}", userEntity);
-        // TODO : 토큰발급
-        String accessToken = "1111";
-        String refreshToken = "1111";
+        User userEntity = userRepository.findByUserIdAndLoginType(authDto.getId(), LoginType.KAKAO);
+        String accessToken = UUID.randomUUID().toString();
+        String refreshToken = UUID.randomUUID().toString();
 
-        // 유저가 존재하지 않는다면 토큰과 함께 insert
         if (userEntity == null) {
-            User newUserEntity = User.from(authDto, loginType, accessToken, refreshToken);
-            User saveUser = userRepository.save(newUserEntity);
-
-            return UserDto.from(saveUser);
+            userEntity = User.from(authDto, loginType, accessToken, refreshToken);
         }
-        // 유저가 존재하면 조회한 유저로 토큰만 업데이트
         userEntity.updateToken(accessToken, refreshToken);
-        User saveUser = userRepository.save(userEntity);
-        return UserDto.from(saveUser);
-//        userEntity.updateToken(accessToken, refreshToken);
-
-        // 토큰이 이미 있다면 새 토큰을 업데이트 -> ??
+        return UserDto.from(userEntity);
     }
 
     public UserDto updateUser(UserDto userDto) {
