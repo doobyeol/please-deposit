@@ -1,21 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
-const toggle = ref(0);
+import NavBar from "@/components/NavBar.vue";
+import MenuBar from "@/components/MenuBar.vue";
 </script>
 
 <template>
   <v-app>
-    <v-app-bar :elevation="2">
-      <v-app-bar-title>
-        <v-row class="align-center">
-          <v-col :cols="2">
-            <v-img src="/src/assets/images/logo.png" width="40px"></v-img>
-          </v-col>
-          <v-col class="pl-0">입금부탁</v-col>
-        </v-row>
-      </v-app-bar-title>
-    </v-app-bar>
+    <NavBar></NavBar>
 
     <v-main>
       <v-container>
@@ -23,26 +13,16 @@ const toggle = ref(0);
       </v-container>
     </v-main>
 
-    <v-footer id="footer" :app="true">
-      <v-btn-toggle
-        v-model="toggle"
-        color="info"
-        rounded="0"
-        id="btnGroup"
-        height="80px"
-      >
-        <v-btn class="flex-1 menu-btn" stacked prepend-icon="mdi-home">
-          홈
-        </v-btn>
-        <v-btn class="flex-1 menu-btn" stacked prepend-icon="mdi-cog">
-          설정
-        </v-btn>
-      </v-btn-toggle>
-    </v-footer>
+    <MenuBar></MenuBar>
   </v-app>
 </template>
 
 <style lang="scss" scoped>
+.app-bar {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+}
 #footer {
   padding: 0;
 
