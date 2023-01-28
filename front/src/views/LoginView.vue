@@ -6,10 +6,10 @@ const handleLoginWithKakao = () => {
 </script>
 
 <template>
-  <main>
+  <div>
     <h1 class="p-4">This is an Login page</h1>
     <v-btn color="yellow" @click="handleLoginWithKakao">Kakao 로그인</v-btn>
-  </main>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>
