@@ -9,9 +9,7 @@ import { createVuetify } from "vuetify";
 export default createVuetify({
   components,
   directives,
-  theme: {
-    defaultTheme: "dark",
-  },
+  theme: {},
   icons: {
     defaultSet: "mdi",
     aliases,
