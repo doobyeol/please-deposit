@@ -9,6 +9,9 @@ spring:
         ddl-auto: none
     generate-ddl: false
     show-sql: true
+  output:
+    ansi:
+      enabled: always
 
 oauth:
   login-redirect-uri: http://localhost:5173/main
