@@ -12,6 +12,7 @@ import tk.returntrue.deposit.domain.user.UserService;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -33,9 +34,17 @@ public class LoginWebController {
     @GetMapping("/login/kakao/callback")
     public void kakaoLoginCallback(HttpServletResponse response, @RequestParam String code) throws IOException {
         AuthDto authDto = kakaoOAuthService.authenticate(code);
-        userService.createUserWithOAuth(authDto, LoginType.KAKAO);
+        UserDto userDto = userService.createUserWithOAuth(authDto, LoginType.KAKAO);
+        String accessToken = userDto.getAccessToken();
+
+        Cookie cookie = new Cookie("acst",accessToken);
+        cookie.setMaxAge(60);
+        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
         response.sendRedirect(loginRedirectUri);
     }
-
 
 }
