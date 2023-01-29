@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByLoginType(LoginType loginType);
     User findByUserIdAndLoginType(String userId, LoginType loginType);
+    User findByAccessToken(String accessToken);
 }

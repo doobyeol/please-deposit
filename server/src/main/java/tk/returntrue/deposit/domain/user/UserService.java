@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.returntrue.deposit.domain.common.utils.TokenUtility;
 import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
@@ -13,7 +14,6 @@ import tk.returntrue.deposit.infra.user.repository.UserRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,11 +41,16 @@ public class UserService {
         return UserDto.from(savedUser);
     }
 
+    public UserDto findByAccessToken(String accessToken) {
+        User userEntity = userRepository.findByAccessToken(accessToken);
+        return UserDto.from(userEntity);
+    }
+
     @Transactional
     public UserDto createUserWithOAuth(AuthDto authDto, LoginType loginType) {
         User userEntity = userRepository.findByUserIdAndLoginType(authDto.getId(), LoginType.KAKAO);
-        String accessToken = UUID.randomUUID().toString();
-        String refreshToken = UUID.randomUUID().toString();
+        String accessToken = TokenUtility.generateToken();
+        String refreshToken = TokenUtility.generateToken();
 
         if (userEntity == null) {
             userEntity = User.from(authDto, loginType, accessToken, refreshToken);

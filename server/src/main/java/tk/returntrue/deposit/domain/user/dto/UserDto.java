@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.infra.user.entity.User;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +20,8 @@ public class UserDto {
     private String accessToken;
     private String refreshToken;
     private LoginType loginType;
+    private LocalDateTime accessTokenExpireAt;
+    private LocalDateTime refreshTokenExpireAt;
 
     public static UserDto from(User user) {
         return  UserDto.builder()
@@ -27,6 +31,8 @@ public class UserDto {
                     .accessToken(user.getAccessToken())
                     .refreshToken(user.getRefreshToken())
                     .loginType(user.getLoginType())
+                    .accessTokenExpireAt(user.getAccessTokenExpireAt())
+                    .refreshTokenExpireAt(user.getRefreshTokenExpireAt())
                     .build();
     }
 }
