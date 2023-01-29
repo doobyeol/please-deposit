@@ -6,7 +6,6 @@ plugins {
 
 group = 'tk.returntrue'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -24,12 +23,15 @@ dependencies {
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-config:3.1.5'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.5'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.5'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.apache.commons:commons-lang3:3.12.0'
 }
 
 tasks.named('test') {
