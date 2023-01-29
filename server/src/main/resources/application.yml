@@ -11,7 +11,7 @@ spring:
     show-sql: true
 
 oauth:
-  login-redirect-uri: http://localhost:5173/main
+  login-redirect-uri: http://localhost:5173/entry
   kakao:
     redirect-uri: http://localhost:8080/login/kakao/callback
 
@@ -22,6 +22,6 @@ spring:
       on-profile: prod
 
 oauth:
-  login-redirect-uri: /main
+  login-redirect-uri: /entry
   kakao:
     redirect-uri: https://pleasedeposit.tk/login/kakao/callback

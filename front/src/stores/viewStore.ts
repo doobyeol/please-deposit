@@ -1,16 +1,10 @@
 import { defineStore } from "pinia";
 
-export type ViewState = {
-  isShowNavBar: Boolean;
-  isShowMenuBar: Boolean;
-};
-
 export const useViewStore = defineStore("viewStore", {
-  state: () =>
-    ({
-      isShowNavBar: false,
-      isShowMenuBar: false,
-    } as ViewState),
+  state: () => ({
+    isShowNavBar: false,
+    isShowMenuBar: false,
+  }),
   getters: {},
   actions: {
     showNavBar() {
