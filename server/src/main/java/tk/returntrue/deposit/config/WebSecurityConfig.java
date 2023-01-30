@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return  http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/login/**").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)

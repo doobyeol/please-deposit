@@ -28,7 +28,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
         if (StringUtils.isEmpty(authorization)) {
-            throw new AuthException("Authorization is empty");
+            log.info("Authorization is empty - uri: {}", request.getRequestURI());
+            filterChain.doFilter(request, response);
+            return;
         }
 
         String accessToken = TokenUtility.parseAccessToken(authorization);
