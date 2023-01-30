@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import tk.returntrue.deposit.application.web.login.constants.TokenCookie;
 import tk.returntrue.deposit.domain.oauth.OAuthService;
 import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.UserService;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -35,14 +35,11 @@ public class LoginWebController {
     public void kakaoLoginCallback(HttpServletResponse response, @RequestParam String code) throws IOException {
         AuthDto authDto = kakaoOAuthService.authenticate(code);
         UserDto userDto = userService.createUserWithOAuth(authDto, LoginType.KAKAO);
-        String accessToken = userDto.getAccessToken();
 
-        Cookie cookie = new Cookie("acst",accessToken);
-        cookie.setMaxAge(60);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        String accessToken = userDto.getAccessToken();
+        String refreshToken = userDto.getAccessToken();
+        response.addCookie(TokenCookie.ACCESS_TOKEN.makeCookie(accessToken));
+        response.addCookie(TokenCookie.REFRESH_TOKEN.makeCookie(refreshToken));
 
         response.sendRedirect(loginRedirectUri);
     }
