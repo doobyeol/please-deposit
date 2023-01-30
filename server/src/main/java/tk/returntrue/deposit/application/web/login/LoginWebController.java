@@ -37,7 +37,7 @@ public class LoginWebController {
         UserDto userDto = userService.createUserWithOAuth(authDto, LoginType.KAKAO);
 
         String accessToken = userDto.getAccessToken();
-        String refreshToken = userDto.getAccessToken();
+        String refreshToken = userDto.getRefreshToken();
         response.addCookie(TokenCookie.ACCESS_TOKEN.makeCookie(accessToken));
         response.addCookie(TokenCookie.REFRESH_TOKEN.makeCookie(refreshToken));
 
