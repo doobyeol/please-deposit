@@ -1,4 +1,4 @@
-package tk.returntrue.deposit.application.web.login.constants;
+package tk.returntrue.deposit.application.common.constants;
 
 import lombok.Getter;
 

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import tk.returntrue.deposit.application.web.login.constants.TokenCookie;
+import tk.returntrue.deposit.application.common.constants.TokenCookie;
 import tk.returntrue.deposit.domain.oauth.OAuthService;
 import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.UserService;
