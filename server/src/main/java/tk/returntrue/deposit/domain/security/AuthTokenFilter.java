@@ -8,10 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tk.returntrue.deposit.domain.common.exceptions.AuthException;
 import tk.returntrue.deposit.domain.common.utils.TokenUtility;
 import tk.returntrue.deposit.domain.security.auth.UserDetailsServiceImpl;
 
-import javax.security.sasl.AuthenticationException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +26,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("doFilterInternal!");
         String authorization = request.getHeader("Authorization");
         if (StringUtils.isEmpty(authorization)) {
-            throw new AuthenticationException("Authorization is empty") {};
+            throw new AuthException("Authorization is empty");
         }
 
         String accessToken = TokenUtility.parseAccessToken(authorization);

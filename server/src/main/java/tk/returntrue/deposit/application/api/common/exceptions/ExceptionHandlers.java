@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import tk.returntrue.deposit.domain.common.exceptions.AuthException;
 
 import java.util.NoSuchElementException;
 
@@ -31,7 +32,7 @@ public class ExceptionHandlers extends ResponseEntityExceptionHandler {
         return ErrorResponseDto.builder().message(e.getMessage()).build();
     }
 
-    @ExceptionHandler(value = { AuthenticationException.class })
+    @ExceptionHandler(value = { AuthenticationException.class, AuthException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public ErrorResponseDto handleAuthenticationException(Exception e) {

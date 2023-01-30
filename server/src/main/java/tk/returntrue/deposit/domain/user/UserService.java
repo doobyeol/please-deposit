@@ -13,6 +13,7 @@ import tk.returntrue.deposit.infra.user.repository.UserRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -48,15 +49,16 @@ public class UserService {
 
     @Transactional
     public UserDto createUserWithOAuth(AuthDto authDto, LoginType loginType) {
-        User userEntity = userRepository.findByUserIdAndLoginType(authDto.getId(), LoginType.KAKAO);
+        User userEntity = userRepository.findByUserIdAndLoginType(authDto.getId(), loginType);
         String accessToken = TokenUtility.generateToken();
         String refreshToken = TokenUtility.generateToken();
 
-        if (userEntity == null) {
+        if (Objects.isNull(userEntity)) {
             userEntity = User.from(authDto, loginType, accessToken, refreshToken);
         }
         userEntity.updateToken(accessToken, refreshToken);
-        return UserDto.from(userEntity);
+        User savedUser = userRepository.save(userEntity);
+        return UserDto.from(savedUser);
     }
 
     public UserDto updateUser(UserDto userDto) {

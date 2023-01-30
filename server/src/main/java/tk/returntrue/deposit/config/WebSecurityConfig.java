@@ -28,13 +28,13 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return  http.cors().and().csrf().disable()
-                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .anyRequest().authenticated()
-                .and().build();
+                .and().addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .build();
     }
 }
