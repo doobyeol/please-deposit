@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import EntryView from "@/views/EntryView.vue";
 import HomeView from "@/views/HomeView.vue";
 import AboutView from "@/views/AboutView.vue";
+import { useSessionStore } from "@/stores/sessionStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const { isLoggedIn } = useSessionStore();
   const { showMenuBar, showNavBar, hideMenuBar, hideNavBar } = useViewStore();
   if (to.meta.showNavBar) {
     showNavBar();
@@ -44,6 +46,8 @@ router.beforeEach((to, from, next) => {
     hideNavBar();
     hideMenuBar();
   }
+
+  // if (isLoggedIn) const accessToken = Cookies.get("acstk");
 
   next();
 });

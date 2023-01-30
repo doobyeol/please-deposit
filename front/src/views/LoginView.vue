@@ -1,4 +1,20 @@
 <script setup lang="ts">
+import { useSessionStore } from "@/stores/sessionStore";
+import router from "@/router";
+
+const { login } = useSessionStore();
+
+// TODO: 로그인 되는 동안 loading 페이지 보여주기
+const init = async () => {
+  const isLogginIn = await login();
+  if (isLogginIn) {
+    console.log("Logi 성공!!!");
+    router.push("entry");
+  }
+};
+
+init();
+
 const handleLoginWithKakao = () => {
   location.href =
     "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=f59502021c10423854ce6680682e1ebf&redirect_uri=http://localhost:8080/login/kakao/callback";
@@ -9,7 +25,11 @@ const handleLoginWithKakao = () => {
   <div class="login-area d-flex justify-center align-center flex-column">
     <v-spacer></v-spacer>
     <div class="d-flex justify-center align-center flex-column pb-10">
-      <v-img src="/src/assets/images/logo.png" width="150px" class=""></v-img>
+      <v-img
+        src="/src/assets/images/logo.png"
+        width="150px"
+        class="logo"
+      ></v-img>
       <div class="login-title">입금부탁</div>
     </div>
     <div class="pt-16">
@@ -40,5 +60,19 @@ const handleLoginWithKakao = () => {
 }
 .login-btn {
   cursor: pointer;
+}
+.logo {
+  position: relative;
+  animation: motion 0.5s linear 0s infinite alternate;
+  top: 0;
+}
+
+@keyframes motion {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: 10px;
+  }
 }
 </style>
