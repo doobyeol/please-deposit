@@ -50,7 +50,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return accessToken;
+        return String.valueOf(userSeq);
     }
 
     @Override

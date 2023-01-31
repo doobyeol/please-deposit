@@ -56,4 +56,50 @@ public class UserServiceTest {
         });
     }
 
+    @Test
+    public void updateUser_성공() {
+        // given
+        UserDto userDto = UserDto.builder()
+                .userSeq(1L)
+                .nickname("leaf")
+                .build();
+
+        User findUser = User.builder()
+                .userSeq(1L)
+                .nickname("doobyeol")
+                .build();
+
+        User savedUser = User.builder()
+                .userSeq(1L)
+                .nickname("leaf")
+                .build();
+
+        when(userRepository.findById(userDto.getUserSeq())).thenReturn(Optional.of(findUser));
+        when(userRepository.save(findUser)).thenReturn(savedUser);
+
+        // when
+        UserDto updatedUserDto = userService.updateUser(userDto);
+
+        // then
+        assertEquals(userDto.getNickname(), updatedUserDto.getNickname());
+    }
+
+    @Test
+    public void updateUser_유저없음() {
+        // given
+        UserDto userDto = UserDto.builder()
+                .userSeq(1L)
+                .nickname("leaf")
+                .build();
+
+        when(userRepository.findById(userDto.getUserSeq())).thenReturn(Optional.ofNullable(null));
+
+        // when
+        UserDto updatedUserDto = userService.updateUser(userDto);
+
+        // then
+        assertEquals(null, updatedUserDto);
+    }
+
+
 }
