@@ -7,17 +7,11 @@ export const useViewStore = defineStore("viewStore", {
   }),
   getters: {},
   actions: {
-    showNavBar() {
-      this.isShowNavBar = true;
+    setShowNavBar(show: boolean) {
+      this.isShowNavBar = show;
     },
-    hideNavBar() {
-      this.isShowNavBar = false;
-    },
-    showMenuBar() {
-      this.isShowMenuBar = true;
-    },
-    hideMenuBar() {
-      this.isShowMenuBar = false;
+    setShowMenuBar(show: boolean) {
+      this.isShowMenuBar = show;
     },
   },
 });

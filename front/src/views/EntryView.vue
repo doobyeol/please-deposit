@@ -1,15 +1,47 @@
 <script setup lang="ts">
-// 1. store 에 token 이 있는지 확인
-// 2. store 에 token 없으면 cookie 에서 확인
-// 3. token 이 있으면 API 호출
-// 4. token 이 없으면 팝업 띄우고 로그인 페이지로 이동
+const handleClickGroup = (grouId: number) => {
+  console.log("grouId: ", grouId);
+};
+
+const handleClickAddGroup = () => {
+  console.log("handleClickAddGroup");
+};
 </script>
 
 <template>
-  <main>
-    <h1>진입 페이지! 여기서 입장할 모임 선택해야 함</h1>
-    <v-icon icon="mdi-home" />
-  </main>
+  <div class="d-flex justify-center align-center flex-column">
+    <div class="entry-title">입장할 모임을 선택하세요!</div>
+    <div class="pt-5 pb-5">
+      <v-card
+        width="300"
+        class="mt-5 rounded-xl"
+        variant="flat"
+        @click="handleClickGroup(1)"
+      >
+        <v-card-item>
+          <v-card-title class="group-title">ReturnTrue</v-card-title>
+        </v-card-item>
+        <v-card-text>
+          <div>모임장: 두별</div>
+          <div>인원: 10 명</div>
+          <div>만든날: 2023-01-01</div>
+        </v-card-text>
+      </v-card>
+    </div>
+    <div>
+      <v-btn icon="mdi-plus" flat @click="handleClickAddGroup"></v-btn>
+    </div>
+    <div class="pt-2 text-disabled">모임이 없다면 새로 만들어보세요!</div>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.entry-title {
+  padding-top: 50px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.group-title {
+  font-weight: bold;
+}
+</style>
