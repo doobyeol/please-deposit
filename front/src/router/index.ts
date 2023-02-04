@@ -13,43 +13,45 @@ const router = createRouter({
       path: "/",
       name: "login",
       component: LoginView,
-      meta: { showNavBar: false },
+      meta: { requiredLogin: false, showNavBar: false, showMenuBar: false },
     },
     {
       path: "/entry",
       name: "entry",
       component: EntryView,
-      meta: { showNavBar: true },
+      meta: { requiredLogin: false, showNavBar: false, showMenuBar: false },
     },
     {
       path: "/main",
       name: "home",
       component: HomeView,
-      meta: { showNavBar: true },
+      meta: { requiredLogin: true, showNavBar: true, showMenuBar: true },
     },
     {
       path: "/about",
       name: "about",
       component: AboutView,
-      meta: { showNavBar: true },
+      meta: { requiredLogin: true, showNavBar: true, showMenuBar: true },
     },
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  const { isLoggedIn } = useSessionStore();
-  const { showMenuBar, showNavBar, hideMenuBar, hideNavBar } = useViewStore();
-  if (to.meta.showNavBar) {
-    showNavBar();
-    showMenuBar();
+router.beforeEach(async (to, from, next) => {
+  const { setShowNavBar, setShowMenuBar } = useViewStore();
+  setShowNavBar(to.meta.showNavBar as boolean);
+  setShowMenuBar(to.meta.showMenuBar as boolean);
+
+  const { isLoggedIn, login } = useSessionStore();
+  if (to.meta.requiredLogin && !isLoggedIn) {
+    const loginResult = await login();
+    if (loginResult) {
+      next();
+    } else {
+      next({ path: "/" });
+    }
   } else {
-    hideNavBar();
-    hideMenuBar();
+    next();
   }
-
-  // if (isLoggedIn) const accessToken = Cookies.get("acstk");
-
-  next();
 });
 
 export default router;
