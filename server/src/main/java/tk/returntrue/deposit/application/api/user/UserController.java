@@ -1,8 +1,10 @@
 package tk.returntrue.deposit.application.api.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import tk.returntrue.deposit.application.annotations.ApiController;
+import tk.returntrue.deposit.application.common.dto.LoginUserDto;
 import tk.returntrue.deposit.domain.user.UserService;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @ApiController
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService userService;
 
@@ -20,7 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/user/{userSeq}")
-    public UserDto getUser(@PathVariable Long userSeq) {
+    public UserDto getUser(@PathVariable Long userSeq, LoginUserDto loginUserDto) {
+        log.info("LoginUserDto: {}", loginUserDto);
         return userService.findUser(userSeq);
     }
 

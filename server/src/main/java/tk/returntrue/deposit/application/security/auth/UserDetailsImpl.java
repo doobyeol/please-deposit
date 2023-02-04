@@ -1,6 +1,6 @@
-package tk.returntrue.deposit.domain.security.auth;
+package tk.returntrue.deposit.application.security.auth;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+@Getter
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +33,7 @@ public class UserDetailsImpl implements UserDetails {
         this.nickname = nickname;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.loginType = loginType;
         this.authorities = authorities;
     }
 

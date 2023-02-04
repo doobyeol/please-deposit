@@ -1,4 +1,4 @@
-package tk.returntrue.deposit.domain.security;
+package tk.returntrue.deposit.application.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-import tk.returntrue.deposit.domain.common.exceptions.AuthException;
 import tk.returntrue.deposit.domain.common.utils.TokenUtility;
-import tk.returntrue.deposit.domain.security.auth.UserDetailsServiceImpl;
+import tk.returntrue.deposit.application.security.auth.UserDetailsServiceImpl;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

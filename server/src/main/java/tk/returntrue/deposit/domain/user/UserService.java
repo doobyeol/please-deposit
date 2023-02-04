@@ -8,7 +8,6 @@ import tk.returntrue.deposit.domain.common.exceptions.AuthException;
 import tk.returntrue.deposit.domain.common.utils.TokenUtility;
 import tk.returntrue.deposit.domain.oauth.dto.AuthDto;
 import tk.returntrue.deposit.domain.user.constants.LoginType;
-import tk.returntrue.deposit.domain.user.dto.TokenDto;
 import tk.returntrue.deposit.domain.user.dto.UserDto;
 import tk.returntrue.deposit.infra.user.entity.User;
 import tk.returntrue.deposit.infra.user.repository.UserRepository;

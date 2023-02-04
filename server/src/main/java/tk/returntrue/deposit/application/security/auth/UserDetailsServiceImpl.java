@@ -1,4 +1,4 @@
-package tk.returntrue.deposit.domain.security.auth;
+package tk.returntrue.deposit.application.security.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

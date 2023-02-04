@@ -8,9 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tk.returntrue.deposit.domain.security.AuthEntryPoint;
-import tk.returntrue.deposit.domain.security.AuthTokenFilter;
-import tk.returntrue.deposit.domain.security.auth.UserDetailsServiceImpl;
+import tk.returntrue.deposit.application.security.AuthEntryPoint;
+import tk.returntrue.deposit.application.security.AuthTokenFilter;
+import tk.returntrue.deposit.application.security.auth.UserDetailsServiceImpl;
 
 @Configuration
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package tk.returntrue.deposit.domain.security.auth;
+package tk.returntrue.deposit.application.security.auth;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
