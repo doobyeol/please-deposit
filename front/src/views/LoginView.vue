@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { useSessionStore } from "@/stores/sessionStore";
 import router from "@/router";
+import { ref } from "vue";
 
 const { login } = useSessionStore();
+const isLoading = ref(false);
 
-// TODO: 로그인 되는 동안 loading 페이지 보여주기
 const init = async () => {
+  isLoading.value = true;
   const isLogginIn = await login();
   if (isLogginIn) {
-    console.log("Logi 성공!!!");
     router.push("entry");
   }
+  isLoading.value = false;
 };
 
 init();
@@ -22,25 +24,33 @@ const handleLoginWithKakao = () => {
 </script>
 
 <template>
-  <div class="login-area d-flex justify-center align-center flex-column">
-    <v-spacer></v-spacer>
-    <div class="d-flex justify-center align-center flex-column pb-10">
-      <v-img
-        src="/src/assets/images/logo.png"
-        width="150px"
-        class="logo"
-      ></v-img>
-      <div class="login-title">입금부탁</div>
+  <div class="login-area d-flex justify-center align-center">
+    <div class="d-flex justify-center align-center flex-column">
+      <v-spacer></v-spacer>
+      <div class="d-flex justify-center align-center flex-column pb-10">
+        <v-img
+          src="/src/assets/images/logo.png"
+          width="150px"
+          class="logo"
+        ></v-img>
+        <div class="login-title">입금부탁</div>
+      </div>
+      <div class="pt-16">
+        <v-progress-circular
+          v-if="isLoading"
+          indeterminate
+          color="amber"
+        ></v-progress-circular>
+        <v-img
+          v-else
+          src="/src/assets/images/kakao_login.png"
+          width="200px"
+          class="pt-5 login-btn"
+          @click="handleLoginWithKakao"
+        ></v-img>
+      </div>
+      <v-spacer></v-spacer>
     </div>
-    <div class="pt-16">
-      <v-img
-        src="/src/assets/images/kakao_login.png"
-        width="200px"
-        class="pt-5 login-btn"
-        @click="handleLoginWithKakao"
-      ></v-img>
-    </div>
-    <v-spacer></v-spacer>
   </div>
 </template>
 

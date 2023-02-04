@@ -12,7 +12,7 @@ const { isShowNavBar, isShowMenuBar } = storeToRefs(viewStore);
   <v-app>
     <NavBar v-if="isShowNavBar"></NavBar>
 
-    <v-main>
+    <v-main class="app-main">
       <v-container :class="{ 'pa-0-important': !isShowNavBar }">
         <RouterView />
       </v-container>
@@ -23,6 +23,9 @@ const { isShowNavBar, isShowMenuBar } = storeToRefs(viewStore);
 </template>
 
 <style lang="scss" scoped>
+.app-main {
+  background-color: #e4f2e9bf;
+}
 .pa-0-important {
   padding: 0 !important;
 }
