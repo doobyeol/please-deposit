@@ -10,7 +10,7 @@
 
 <style lang="scss" scoped>
 .nav-bar {
-  background-color: #dde6ed;
+  background-color: #cfe3d6bf;
   height: 50px;
   display: flex;
   padding: 10px;

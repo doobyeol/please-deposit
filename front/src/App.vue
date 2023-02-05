@@ -24,7 +24,7 @@ const { isShowNavBar, isShowMenuBar } = storeToRefs(viewStore);
 
 <style lang="scss" scoped>
 .app-main {
-  background-color: #e4f2e9bf;
+  background-color: #cfe3d6bf;
 }
 .pa-0-important {
   padding: 0 !important;

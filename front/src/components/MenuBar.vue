@@ -1,20 +1,29 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const toggle = ref(0);
+
+onMounted(() => {
+  toggle.value = 0;
+});
 </script>
 
 <template>
   <v-footer id="footer" :app="true">
     <v-btn-toggle
       v-model="toggle"
-      color="info"
-      rounded="0"
       id="btnGroup"
-      height="80px"
+      height="60px"
+      variant="plain"
+      color="blue-darken-1"
+      :mandatory="true"
     >
-      <v-btn class="flex-1 menu-btn" stacked prepend-icon="mdi-home">
-        홈
+      <v-btn
+        class="flex-1 menu-btn"
+        stacked
+        prepend-icon="mdi-receipt-text-outline"
+      >
+        지출
       </v-btn>
       <v-btn class="flex-1 menu-btn" stacked prepend-icon="mdi-cog">
         설정
@@ -26,15 +35,35 @@ const toggle = ref(0);
 <style lang="scss" scoped>
 #footer {
   padding: 0;
+  background-color: #c0dbc9;
 
   #btnGroup {
     display: flex;
     width: 100%;
     height: 80px;
 
-    .menu-btn {
-      background-color: #c2c2c238;
+    .v-btn--variant-plain {
+      opacity: 0.4;
     }
+    // .v-btn--variant-plain:focus {
+    //   opacity: 1;
+    // }
+    .v-btn--active {
+      opacity: 1;
+    }
+
+    // .menu-btn {
+    //   background-color: white;
+    // }
+    // .menu-btn:active {
+    //   background-color: white;
+    // }
+    // .menu-btn:focus {
+    //   background-color: white;
+    // }
+    // .v-btn__overlay {
+    //   opacity: 1;
+    // }
   }
 }
 </style>
