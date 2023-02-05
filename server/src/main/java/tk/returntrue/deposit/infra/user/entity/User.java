@@ -46,6 +46,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private LoginType loginType;
 
+
     public void updateNickname(String nickname) {
         this.nickname = nickname;
     }
@@ -56,32 +57,6 @@ public class User extends BaseEntity {
         this.refreshTokenExpireAt = now.plusDays(7);
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-    }
-
-    public static User from(UserDto userDto) {
-        User user = User.builder()
-                .userId(userDto.getUserId())
-                .nickname(userDto.getNickname())
-                .loginType(userDto.getLoginType())
-                .build();
-
-        user.setCreatedBy(userDto.getUserId());
-        user.setUpdatedBy(userDto.getUserId());
-
-        return user;
-    }
-
-    public static User from(AuthDto authDto, LoginType loginType) {
-        User user = User.builder()
-                .userId(authDto.getId())
-                .nickname(authDto.getNickname())
-                .loginType(loginType)
-                .build();
-
-        user.setCreatedBy(authDto.getId());
-        user.setUpdatedBy(authDto.getId());
-
-        return user;
     }
 
     public static User from(AuthDto authDto, LoginType loginType, String accessToken, String refreshToken) {

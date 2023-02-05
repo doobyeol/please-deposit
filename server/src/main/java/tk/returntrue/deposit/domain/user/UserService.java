@@ -38,12 +38,7 @@ public class UserService {
         return UserDto.from(user);
     }
 
-    public UserDto createUser(UserDto userDto) {
-        User userEntity = User.from(userDto);
-        User savedUser = userRepository.save(userEntity);
-        return UserDto.from(savedUser);
-    }
-
+    @Transactional
     public UserDto findByAccessToken(String accessToken) {
         User userEntity = userRepository.findByAccessToken(accessToken);
         return UserDto.from(userEntity);

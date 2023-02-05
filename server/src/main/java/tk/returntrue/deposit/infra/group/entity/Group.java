@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class GroupEntity extends BaseEntity {
+public class Group extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -25,14 +25,13 @@ public class GroupEntity extends BaseEntity {
     private String groupName;
 
 
-    public static GroupEntity from(GroupDto groupDto) {
-        GroupEntity group = GroupEntity.builder()
-                .groupId(groupDto.getGroupId())
+    public static Group from(GroupDto groupDto, Long userSeq) {
+        Group group = Group.builder()
                 .groupName(groupDto.getGroupName())
                 .build();
 
-        group.setCreatedBy(groupDto.getGroupOwner());
-        group.setUpdatedBy(groupDto.getGroupOwner());
+        group.setCreatedBy(String.valueOf(userSeq));
+        group.setUpdatedBy(String.valueOf(userSeq));
 
         return group;
     }

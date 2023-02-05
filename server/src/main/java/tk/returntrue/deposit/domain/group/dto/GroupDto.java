@@ -5,9 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tk.returntrue.deposit.infra.group.entity.GroupEntity;
+import tk.returntrue.deposit.infra.group.entity.Group;
+import tk.returntrue.deposit.infra.group.entity.UserGroup;
+import tk.returntrue.deposit.infra.user.entity.User;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,6 +20,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class GroupDto {
     private Long groupId;
+    @NotNull(message = "groupName is required")
+    @NotEmpty(message = "groupName is required")
     private String groupName;
     private String groupOwner;
     private int memberCount;
@@ -22,14 +29,23 @@ public class GroupDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
 
-    public static GroupDto from(GroupEntity groupEntity) {
+    public static GroupDto from(Group groupEntity) {
         GroupDto groupDto = GroupDto.builder()
                 .groupId(groupEntity.getGroupId())
                 .groupName(groupEntity.getGroupName())
-                .groupOwner(groupEntity.getCreatedBy())
                 .createdAt(groupEntity.getCreatedAt())
                 .build();
 
         return groupDto;
+    }
+
+    public static GroupDto from(Group group, User ownerUser, List<UserGroup> members) {
+        return GroupDto.builder()
+                .groupId(group.getGroupId())
+                .groupName(group.getGroupName())
+                .groupOwner(ownerUser.getNickname())
+                .memberCount(members.size())
+                .createdAt(group.getCreatedAt())
+                .build();
     }
 }
