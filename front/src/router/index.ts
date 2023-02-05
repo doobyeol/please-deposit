@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useViewStore } from "@/stores/viewStore";
 import LoginView from "@/views/LoginView.vue";
 import EntryView from "@/views/EntryView.vue";
-import HomeView from "@/views/HomeView.vue";
+import ExpenseView from "@/views/ExpenseView.vue";
 import AboutView from "@/views/AboutView.vue";
 import { useSessionStore } from "@/stores/sessionStore";
 
@@ -22,9 +22,9 @@ const router = createRouter({
       meta: { requiredLogin: false, showNavBar: false, showMenuBar: false },
     },
     {
-      path: "/main",
-      name: "home",
-      component: HomeView,
+      path: "/expense",
+      name: "expense",
+      component: ExpenseView,
       meta: { requiredLogin: true, showNavBar: true, showMenuBar: true },
     },
     {

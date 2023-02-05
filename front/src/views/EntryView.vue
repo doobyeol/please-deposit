@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import router from "@/router";
+
 const handleClickGroup = (grouId: number) => {
   console.log("grouId: ", grouId);
+  router.push("expense");
 };
 
 const handleClickAddGroup = () => {
@@ -31,7 +34,7 @@ const handleClickAddGroup = () => {
     <div>
       <v-btn icon="mdi-plus" flat @click="handleClickAddGroup"></v-btn>
     </div>
-    <div class="pt-2 text-disabled">모임이 없다면 새로 만들어보세요!</div>
+    <div class="pt-2 text-disabled">새 모임을 만들어보세요</div>
   </div>
 </template>
 
@@ -40,6 +43,7 @@ const handleClickAddGroup = () => {
   padding-top: 50px;
   font-size: 25px;
   font-weight: bold;
+  color: #065c00;
 }
 .group-title {
   font-weight: bold;

@@ -3,7 +3,7 @@
 <template>
   <main>
     <h1 class="p-4">This is an home page</h1>
-    <v-icon icon="mdi-home" />
+    <v-icon icon="mdi-receipt_long" />
   </main>
 </template>
 
