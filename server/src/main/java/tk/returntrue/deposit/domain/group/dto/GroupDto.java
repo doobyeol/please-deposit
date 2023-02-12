@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import tk.returntrue.deposit.domain.group.constants.UserGroupStatus;
 import tk.returntrue.deposit.infra.group.entity.Group;
 import tk.returntrue.deposit.infra.group.entity.UserGroup;
 import tk.returntrue.deposit.infra.user.entity.User;
@@ -25,6 +26,7 @@ public class GroupDto {
     private String groupName;
     private String groupOwner;
     private int memberCount;
+    private UserGroupStatus status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime createdAt;
@@ -39,12 +41,13 @@ public class GroupDto {
         return groupDto;
     }
 
-    public static GroupDto from(Group group, User ownerUser, List<UserGroup> members) {
+    public static GroupDto from(Group group, User ownerUser, List<UserGroup> members, UserGroupStatus status) {
         return GroupDto.builder()
                 .groupId(group.getGroupId())
                 .groupName(group.getGroupName())
                 .groupOwner(ownerUser.getNickname())
                 .memberCount(members.size())
+                .status(status)
                 .createdAt(group.getCreatedAt())
                 .build();
     }

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.returntrue.deposit.application.common.dto.LoginUserDto;
+import tk.returntrue.deposit.domain.common.exceptions.BadRequestException;
 import tk.returntrue.deposit.domain.group.constants.UserGroupRole;
 import tk.returntrue.deposit.domain.group.constants.UserGroupStatus;
 import tk.returntrue.deposit.domain.group.dto.GroupDto;
@@ -34,7 +35,7 @@ public class GroupService {
                     Group group = groupRepository.findById(userGroup.getGroupId()).get();
 
                     // member count, owner
-                    List<UserGroup> members = userGroupRepository.findByGroupIdAndStatus(userGroup.getGroupId(), UserGroupStatus.ACCEPTED);
+                    List<UserGroup> members = userGroupRepository.findByGroupIdAndStatusNot(userGroup.getGroupId(), UserGroupStatus.REJECTED);
                     UserGroup owner = members.stream()
                             .filter(member -> member.getRole().equals(UserGroupRole.OWNER))
                             .findFirst()
@@ -43,7 +44,7 @@ public class GroupService {
                     // owner nickname
                     User ownerUser = userRepository.findById(owner.getUserSeq()).get();
 
-                    return GroupDto.from(group, ownerUser, members);
+                    return GroupDto.from(group, ownerUser, members, userGroup.getStatus());
                 })
                 .collect(Collectors.toList());
 
@@ -58,5 +59,14 @@ public class GroupService {
         userGroupRepository.save(userGroup);
 
         return GroupDto.from(savedGroup);
+    }
+
+    @Transactional
+    public void updateGroupStatus(Long groupId, UserGroupStatus status, LoginUserDto loginUserDto) {
+        UserGroup userGroup = userGroupRepository.findByGroupIdAndUserSeq(groupId, loginUserDto.getUserSeq());
+        if (userGroup.notAvailableChangeStatus()) {
+            throw new BadRequestException("Status is not WAITING");
+        }
+        userGroup.updateStatus(status, loginUserDto.getUserSeq());
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/user/by/{loginType}")
+    @GetMapping("/user/loginType/{loginType}")
     public List<UserDto> getUser(@PathVariable LoginType loginType) {
         return userService.findUserList(loginType);
     }

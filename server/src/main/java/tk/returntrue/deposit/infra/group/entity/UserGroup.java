@@ -50,4 +50,13 @@ public class UserGroup extends BaseEntity {
         return userGroup;
     }
 
+    public void updateStatus(UserGroupStatus status, Long userSeq) {
+        this.status = status;
+        super.setUpdatedBy(String.valueOf(userSeq));
+    }
+
+    public boolean notAvailableChangeStatus() {
+        return !this.status.equals(UserGroupStatus.WAITING);
+    }
+
 }

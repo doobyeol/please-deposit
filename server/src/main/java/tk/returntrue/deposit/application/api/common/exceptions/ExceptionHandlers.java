@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import tk.returntrue.deposit.domain.common.exceptions.AuthException;
+import tk.returntrue.deposit.domain.common.exceptions.BadRequestException;
 
 import java.util.NoSuchElementException;
 
@@ -39,10 +40,10 @@ public class ExceptionHandlers {
         return ErrorResponseDto.builder().message(e.getMessage()).build();
     }
 
-    @ExceptionHandler(value = { MethodArgumentNotValidException.class })
+    @ExceptionHandler(value = { MethodArgumentNotValidException.class, BadRequestException.class })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResponseDto handleMethodArgumentNotValidException(Exception e) {
+    public ErrorResponseDto handleBadRequest(Exception e) {
         log.error("", e);
         return ErrorResponseDto.builder().message(e.getMessage()).build();
     }

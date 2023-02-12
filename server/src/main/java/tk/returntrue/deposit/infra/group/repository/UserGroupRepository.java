@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface UserGroupRepository extends JpaRepository<UserGroup, Long> {
     List<UserGroup> findByUserSeq(Long userSeq);
-    List<UserGroup> findByGroupIdAndStatus(Long groupId, UserGroupStatus status);
+    List<UserGroup> findByGroupIdAndStatusNot(Long groupId, UserGroupStatus status);
+    UserGroup findByGroupIdAndUserSeq(Long groupId, Long userSeq);
 }
