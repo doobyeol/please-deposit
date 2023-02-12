@@ -1,13 +1,34 @@
 <script setup lang="ts">
+import GroupItem from "@/components/entry/GroupItem.vue";
 import router from "@/router";
+import { ref, onMounted } from "vue";
+import { useGroupStore } from "@/stores/group/groupStore";
+import { storeToRefs } from "pinia";
 
-const handleClickGroup = (grouId: number) => {
+const groupStore = useGroupStore();
+const { groupList, isLoading } = storeToRefs(groupStore);
+const { getGroupList } = groupStore;
+
+getGroupList();
+
+const showFormPopup = ref(false);
+
+const moveGroupPage = (grouId: number) => {
   console.log("grouId: ", grouId);
   router.push("expense");
 };
 
-const handleClickAddGroup = () => {
-  console.log("handleClickAddGroup");
+const acceptInvitation = (groupId: number) => {
+  console.log("acceptInvitation", groupId);
+};
+
+const rejectInvitation = (groupId: number) => {
+  console.log("rejectInvitation", groupId);
+};
+
+const createGroup = () => {
+  console.log("createGroup");
+  showFormPopup.value = false;
 };
 </script>
 
@@ -15,26 +36,30 @@ const handleClickAddGroup = () => {
   <div class="d-flex justify-center align-center flex-column">
     <div class="entry-title">입장할 모임을 선택하세요!</div>
     <div class="pt-5 pb-5">
-      <v-card
-        width="300"
-        class="mt-5 rounded-xl"
-        variant="flat"
-        @click="handleClickGroup(1)"
-      >
-        <v-card-item>
-          <v-card-title class="group-title">ReturnTrue</v-card-title>
-        </v-card-item>
-        <v-card-text>
-          <div>모임장: 두별</div>
-          <div>인원: 10 명</div>
-          <div>만든날: 2023-01-01</div>
-        </v-card-text>
-      </v-card>
+      <GroupItem
+        v-for="group in groupList"
+        :key="group.groupId"
+        :group="group"
+        @clickItem="moveGroupPage"
+        @acceptInvitation="acceptInvitation"
+        @rejectInvitation="rejectInvitation"
+      ></GroupItem>
     </div>
     <div>
-      <v-btn icon="mdi-plus" flat @click="handleClickAddGroup"></v-btn>
+      <v-btn icon="mdi-plus" flat @click="showFormPopup = true"></v-btn>
     </div>
     <div class="pt-2 text-disabled">새 모임을 만들어보세요</div>
+    <v-dialog v-model="showFormPopup">
+      <v-card>
+        <v-card-text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="createGroup">생성</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -44,8 +69,5 @@ const handleClickAddGroup = () => {
   font-size: 25px;
   font-weight: bold;
   color: #065c00;
-}
-.group-title {
-  font-weight: bold;
 }
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NavBar from "@/components/NavBar.vue";
 import MenuBar from "@/components/MenuBar.vue";
-import { useViewStore } from "@/stores/viewStore";
+import { useViewStore } from "@/stores/common/viewStore";
 import { storeToRefs } from "pinia";
 
 const viewStore = useViewStore();

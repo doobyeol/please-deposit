@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSessionStore } from "@/stores/sessionStore";
+import { useSessionStore } from "@/stores/common/sessionStore";
 import router from "@/router";
 import { ref } from "vue";
 
