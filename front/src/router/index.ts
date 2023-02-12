@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useViewStore } from "@/stores/viewStore";
+import { useViewStore } from "@/stores/common/viewStore";
 import LoginView from "@/views/LoginView.vue";
 import EntryView from "@/views/EntryView.vue";
 import ExpenseView from "@/views/ExpenseView.vue";
 import AboutView from "@/views/AboutView.vue";
-import { useSessionStore } from "@/stores/sessionStore";
+import { useSessionStore } from "@/stores/common/sessionStore";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,7 +19,7 @@ const router = createRouter({
       path: "/entry",
       name: "entry",
       component: EntryView,
-      meta: { requiredLogin: false, showNavBar: false, showMenuBar: false },
+      meta: { requiredLogin: true, showNavBar: false, showMenuBar: false },
     },
     {
       path: "/expense",
