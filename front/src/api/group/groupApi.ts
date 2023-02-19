@@ -1,9 +1,17 @@
-import type { Group } from "@/models/group/Group";
-import { callGet, callPost } from "../http";
+import type { Group, UserGroupStatus } from "@/models/group/Group";
+import { callGet, callPost, callPut } from "../http";
 
-const getGroupList = async (): Promise<Array<Group>> => {
+export const getGroupList = async (): Promise<Array<Group>> => {
   const data: Array<Group> = await callGet("/api/group/user/list");
   return data;
 };
 
-export { getGroupList };
+export const updateUserGroupStatus = async (
+  groupId: number,
+  status: UserGroupStatus
+): Promise<Array<Group>> => {
+  const data: Array<Group> = await callPut(
+    `/api/group/${groupId}/status/${status}`
+  );
+  return data;
+};

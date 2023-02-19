@@ -1,7 +1,7 @@
 export enum UserGroupStatus {
-  WAITING,
-  ACCEPTED,
-  REJECTED,
+  WAITING = "WAITING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
 }
 
 export interface Group {

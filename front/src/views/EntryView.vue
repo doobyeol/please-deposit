@@ -4,26 +4,34 @@ import router from "@/router";
 import { ref, onMounted } from "vue";
 import { useGroupStore } from "@/stores/group/groupStore";
 import { storeToRefs } from "pinia";
+import { UserGroupStatus, type Group } from "@/models/group/Group";
 
 const groupStore = useGroupStore();
 const { groupList, isLoading } = storeToRefs(groupStore);
-const { getGroupList } = groupStore;
+const { getGroupList, updateUserGroupStatus } = groupStore;
 
 getGroupList();
 
 const showFormPopup = ref(false);
 
-const moveGroupPage = (grouId: number) => {
-  console.log("grouId: ", grouId);
-  router.push("expense");
+const moveGroupPage = (group: Group) => {
+  console.log("group: ", group);
+  if (UserGroupStatus.WAITING === group.status) {
+    // TODO: need to change to common popup or alert
+    alert("모임 참가 여부를 결정해주세요!");
+  } else {
+    router.push("expense");
+  }
 };
 
 const acceptInvitation = (groupId: number) => {
   console.log("acceptInvitation", groupId);
+  updateUserGroupStatus(groupId, UserGroupStatus.ACCEPTED);
 };
 
 const rejectInvitation = (groupId: number) => {
   console.log("rejectInvitation", groupId);
+  updateUserGroupStatus(groupId, UserGroupStatus.REJECTED);
 };
 
 const createGroup = () => {

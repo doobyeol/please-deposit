@@ -1,5 +1,5 @@
 export enum LoginType {
-  KAKAO,
+  KAKAO = "KAKAO",
 }
 
 export interface User {

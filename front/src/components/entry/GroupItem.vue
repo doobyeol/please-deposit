@@ -3,7 +3,7 @@ import { ref, reactive } from "vue";
 import { UserGroupStatus, type Group } from "@/models/group/Group";
 
 const emit = defineEmits<{
-  (e: "clickItem", groupId: number): void;
+  (e: "clickItem", group: Group): void;
   (e: "acceptInvitation", groupId: number): void;
   (e: "rejectInvitation", groupId: number): void;
 }>();
@@ -13,7 +13,7 @@ const props = defineProps<{
 }>();
 
 const clickItem = () => {
-  emit("clickItem", props.group.groupId!!);
+  emit("clickItem", props.group);
 };
 
 const acceptInvitation = () => {
