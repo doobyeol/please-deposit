@@ -14,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -25,7 +26,7 @@ public class GroupDto {
     @NotEmpty(message = "groupName is required")
     private String groupName;
     private String groupOwner;
-    private int memberCount;
+    private Long memberCount;
     private UserGroupStatus status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -42,11 +43,15 @@ public class GroupDto {
     }
 
     public static GroupDto from(Group group, User ownerUser, List<UserGroup> members, UserGroupStatus status) {
+        long memberCount = members.stream()
+                .filter(member -> UserGroupStatus.WAITING.equals(member.getStatus()))
+                .count();
+
         return GroupDto.builder()
                 .groupId(group.getGroupId())
                 .groupName(group.getGroupName())
                 .groupOwner(ownerUser.getNickname())
-                .memberCount(members.size())
+                .memberCount(memberCount)
                 .status(status)
                 .createdAt(group.getCreatedAt())
                 .build();

@@ -12,23 +12,6 @@ export interface ApiError {
   message?: string;
 }
 
-const handleResponse = async (url: string, response: Response) => {
-  const body = await response.json();
-  if (response.status !== 200) {
-    console.warn(
-      `[call api] get - ${url}, Error! status: ${response.status}, body: `,
-      body
-    );
-    throw body;
-  } else {
-    console.info(
-      `[call api] get - ${url}, Success! status: ${response.status}, body: `,
-      body
-    );
-    return body;
-  }
-};
-
 const callGet = async (url: string): Promise<any> => {
   console.log(`[call api] get - ${url}`);
   const options = {
@@ -69,6 +52,34 @@ const callDelete = async (url: string): Promise<any> => {
   };
   const response = await fetch(url, options);
   return await handleResponse(url, response);
+};
+
+const handleResponse = async (url: string, response: Response) => {
+  let body = {};
+  try {
+    body = await response.json();
+  } catch (e) {
+    console.warn("json parsing error", e);
+  }
+
+  if (response.status !== 200) {
+    console.warn(
+      `[call api] - ${url}, Error! status: ${response.status}, body: `,
+      body
+    );
+    throw body;
+  } else {
+    console.info(
+      `[call api] - ${url}, Success! status: ${response.status}, body: `,
+      body
+    );
+    return body;
+  }
+};
+
+const hasResponseBody = (response: Response): boolean => {
+  const contentLength = Number(response.headers.get("content-length") ?? "0");
+  return contentLength > 0;
 };
 
 export { callGet, callPost, callPut, callDelete };
