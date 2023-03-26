@@ -28,7 +28,9 @@ const rejectInvitation = () => {
 <template>
   <v-card width="300" class="mt-5 rounded-xl" variant="flat">
     <v-card-item @click="clickItem">
-      <v-card-title class="group-title">ReturnTrue</v-card-title>
+      <v-card-title class="group-title">{{
+        props.group.groupName
+      }}</v-card-title>
     </v-card-item>
     <v-card-text @click="clickItem">
       <div>모임장: {{ props.group.groupOwner }}</div>

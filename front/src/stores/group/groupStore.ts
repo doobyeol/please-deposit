@@ -1,6 +1,10 @@
 import type { Group, UserGroupStatus } from "@/models/group/Group";
 import { defineStore } from "pinia";
-import { getGroupList, updateUserGroupStatus } from "@/api/group/groupApi";
+import {
+  getGroupList,
+  updateUserGroupStatus,
+  createGroup,
+} from "@/api/group/groupApi";
 
 export interface GroupState {
   groupList?: Array<Group>;
@@ -33,6 +37,9 @@ export const useGroupStore = defineStore("groupStore", {
       } finally {
         this.isLoading = false;
       }
+    },
+    async createGroup(groupName: string) {
+      await createGroup(groupName);
     },
   },
 });
