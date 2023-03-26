@@ -15,3 +15,7 @@ export const updateUserGroupStatus = async (
   );
   return data;
 };
+
+export const createGroup = async (groupName: string): Promise<Group> => {
+  return await callPost(`/api/group`, { groupName });
+};

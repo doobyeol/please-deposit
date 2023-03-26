@@ -8,11 +8,12 @@ import { UserGroupStatus, type Group } from "@/models/group/Group";
 
 const groupStore = useGroupStore();
 const { groupList, isLoading } = storeToRefs(groupStore);
-const { getGroupList, updateUserGroupStatus } = groupStore;
+const { getGroupList, updateUserGroupStatus, createGroup } = groupStore;
 
 getGroupList();
 
 const showFormPopup = ref(false);
+const newGroupName = ref("");
 
 const moveGroupPage = (group: Group) => {
   console.log("group: ", group);
@@ -34,9 +35,15 @@ const rejectInvitation = (groupId: number) => {
   updateUserGroupStatus(groupId, UserGroupStatus.REJECTED);
 };
 
-const createGroup = () => {
-  console.log("createGroup");
+const handleCreateGroup = async () => {
   showFormPopup.value = false;
+  await createGroup(newGroupName.value);
+  getGroupList();
+};
+
+const handleCancelGroup = () => {
+  showFormPopup.value = false;
+  newGroupName.value = "";
 };
 </script>
 
@@ -56,15 +63,25 @@ const createGroup = () => {
     <div>
       <v-btn icon="mdi-plus" flat @click="showFormPopup = true"></v-btn>
     </div>
-    <div class="pt-2 text-disabled">새 모임을 만들어보세요</div>
+    <div class="pt-2 pb-6 text-disabled">새 모임을 만들어보세요</div>
     <v-dialog v-model="showFormPopup">
       <v-card>
         <v-card-text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          <v-row>
+            <v-col>
+              <v-text-field
+                label="새 모임 명"
+                variant="underlined"
+                :hide-details="true"
+                v-model="newGroupName"
+              ></v-text-field>
+            </v-col>
+          </v-row>
         </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" block @click="createGroup">생성</v-btn>
+        <v-card-actions class="mb-2">
+          <v-spacer></v-spacer>
+          <v-btn color="red-darken-3" @click="handleCancelGroup">취소</v-btn>
+          <v-btn color="green-darken-3" @click="handleCreateGroup">생성</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
